@@ -25,5 +25,5 @@ function(pres)
 	# Y-origin at p=1000 mb.
 	# SKEWTY = 132.182 - 44.061 * ALOG10(PRES)
 	#
-	132.18199999999999 - 44.061 * log10(pres)
+	132.182 - 44.061 * log10(pres)
 }

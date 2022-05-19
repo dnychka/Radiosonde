@@ -1,6 +1,8 @@
 plotsonde <- 
 function (dataframe, skewT=TRUE, winds=FALSE, site = "", title = "", 
-            windplot = NULL, s = 3., col = c("black", "red"), addAltitude=TRUE,... ){
+            windplot = NULL, s = 3., col = c("black", "red"), addAltitude=TRUE,
+          mar.skewt = c(5.1, 5.1 , 
+                         2.1 , 5.1), ... ){
 #
 # Copyright 2001,2002 Tim Hoar, Eric Gilleland, and Doug Nychka
 #
@@ -34,8 +36,7 @@ function (dataframe, skewT=TRUE, winds=FALSE, site = "", title = "",
 
        # Need some room for both the skewT plot and the wind profile.
 
-       mar.skewt <- c(5.1, 5.1 , 
-                      2.1 , 5.1)
+       
        
        skewt.plt <- skewt.axis(mar = mar.skewt)$plt
     

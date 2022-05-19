@@ -12,7 +12,7 @@
 
 \arguments{
   \item{dataframe}{ R dataframe with  at least the components 
-\code{c( "press", "temp",  "dewpt")} corresponding to pressure (hPa), temperature (C) and dew point temperature (C).   }
+\code{c( "press", "temp",  "dewpt")} corresponding to pressure (hPa), temperature (C) and dew point temperature (C).  See the data set \code{ExampleSonde} for this format.  }
   \item{skewT}{ Logical value.  If false, will not plot the 
 	        SKEW-T, log p diagram. }
   \item{winds}{ Logical value.  If false, will not plot the
@@ -29,7 +29,7 @@
   \item{...}{ Other optional plotting parameters. }
 }
 \value{
-  No value returned.  Creates a  skewt plot. Note that default is temperature horizontal scale is Farenheit. 
+  No value returned.  Creates a  skewt plot. Note that the default temperature along the horizontal scale is Farenheit. 
 }
 \references{ 
 	1.  Department of Defense, 1969, "USAF SKEW-T, log p DIAGRAM,"
@@ -53,9 +53,8 @@
 
 	6. \url{http://weather.unisys.com/upper_air/skew/details.html}
 }
-\author{  Doug Nychka, Eric Gilleland,}
-\seealso{ \code{\link{getsonde}}, 
-          \code{\link{skewt.axis}} ,
+\author{  Doug Nychka, Eric Gilleland, Tim Hoar}
+\seealso{ \code{\link{skewt.axis}} ,
           \code{\link{skewt.lines}} ,
           \code{\link{skewt.points}} }
 

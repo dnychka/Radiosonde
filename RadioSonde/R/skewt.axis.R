@@ -80,7 +80,7 @@ function(BROWN = "brown", GREEN = "green", redo = FALSE, ...)
 	# (form DOD-WPC 9-16-1  current as of March 1978).
 	#
 	#---------------------------------------------------------------------
-	par(pty = "s", ... )
+	par(pty = "s", xpd=TRUE,... )
 	# --- Define absoulute x,y max/min bounds corresponding to the outer
 	# --- edges of the diagram. These are computed by inverting the 
 	# --- appropriate
@@ -318,11 +318,14 @@ function(BROWN = "brown", GREEN = "green", redo = FALSE, ...)
 			col = GREEN, adj = 0.5, cex = 0.75)
 	}
 	# 
+	# reset clipping to be within plotting region. 
+	par( xpd=TRUE)
+	# 
         # Most of the time, the only thing that needs to be returned by the 
         # routine is the plot boundaries so we know where to put the wind 
         # plot. However, if you are redrawing the curves, you need to be 
         # able to save the new curve data.
-	# 
+	
 	invisible(list(pseudox=holdx, pseudoy=holdy, pseudo=pseudo, 
                  NPSEUDO=NPSEUDO, plt=par()$plt))
 }
