@@ -1,5 +1,9 @@
-# Default NAMESPACE created by R
-# Remove the previous line if you edit this file
 
 # Export all names
 exportPattern(".")
+
+importFrom("graphics", "abline", "axis", "lines", "mtext", "par",
+             "polygon", "segments", "text")
+importFrom("stats", "predict", "sd")
+importFrom("fields", "splint")
+

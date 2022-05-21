@@ -1,15 +1,18 @@
 skewtPlot <- 
   function ( ...,  
                  winds = FALSE,
-               colTemp = c( "red2", "blue2"),
+               colTemp = c( "grey40", "blue2"),
                 colDew = colTemp,
                 lty = c( 1,1),
                 lwd = 1.5,
-             skewplot = NULL,
+             
              windplot = NULL, 
              windAxis = FALSE, 
              sizeBarb = NULL, 
-                 thin = NULL,
+            thin = NULL,
+            
+           magicRatio = 13,
+             skewplot = NULL,
             mar.skewt = c(3.1, 5.1 ,
                           4.1 , 2.1)
             ) {
@@ -26,17 +29,13 @@ skewtPlot <-
       colTemp<- rep(colTemp,L)}
     
 # if wind barbs are to be added divide up plotting region 
+# to leave room on the left for the wind barbs    
     if( winds){
-      magicRatio<- 15
-      if( is.null( skewplot)){
       skewplot = c( 0, magicRatio/(magicRatio + L), 0,1)
-      }
-      
       windplot<- makeWindPlot( windplot, L, magicRatio)
-# margins for windplot next to have the same vertical ones      
+# margins for windplot  have the same vertical ones      
       mar.windplot<- c(mar.skewt[1], 0, mar.skewt[3], 0)
       par(  fig = skewplot )
-      print( skewplot)
       par( mar = mar.skewt )
     }
 # standard plot background that does not depend on data    
@@ -64,20 +63,16 @@ skewtPlot <-
     skewt.lines(hold$dewpt, hold$press,
                 col = colDew[k],  lty = lty[2] , lwd=lwd)
   }
-   print( par()$fig)
+  
 #
 ##############################################################
 # add wind barbs if this is asked for
 ##############################################################
-   print( windplot)
-   
-   
+  
     if (winds) {
       # Draw the windplot in the "space allocated"
       for( k in (1 : L) ){
       par(new = TRUE,  fig = windplot[k,], err = -1.)
-       
-        
        
       # margins need to be the same in vertical so pressure scales match
       par( mar=mar.windplot )
@@ -89,7 +84,7 @@ skewtPlot <-
               sizeBarb = sizeBarb,
                 legend = FALSE, thin=thin, col=colTemp[k],
                lwd=.5,
-               axis=addAxes)
+               axis=addAxes )
       }
       # restore the original graphics parameters      
       par(def.par0)   

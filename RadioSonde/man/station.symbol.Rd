@@ -6,8 +6,11 @@
               wind, temperature, pressure, dewpoint ...  to a given plot. }
 
 \usage{
-station.symbol(cx, cy, direction=0, speed=NA, fill=rep(0,length(cx)), temp=NA,
-                  press=NA, dewpt=NA, circle=TRUE, cex=1)
+station.symbol(
+cx, cy, direction = 0, speed = NA, fill = rep(0,
+                 length(cx)), temp = NA, press = NA, dewpt = NA, circle
+                 = TRUE, cex = 1, spdcolor = "green", lwd = 2
+		  )
 }
 
 \arguments{
@@ -26,21 +29,22 @@ station.symbol(cx, cy, direction=0, speed=NA, fill=rep(0,length(cx)), temp=NA,
   \item{circle}{If TRUE, will plot the usual station symbol with a circle 
                 at its base.}
   \item{cex}{Usual plotting parameter. }
+  \item{spdcolor}{Glyph color}
+  \item{lwd}{barb line width}
 }
-
-\value{ Adds to a plot. }
 
 \author{ Doug Nychka, Eric Gilleland }
 
-\seealso{ \code{\link{plotsonde}}, 
-          \code{\link{plotwind}}, 
-          \code{\link{skewt.axis}}
+\seealso{
+\code{\link{plotWind}} 
 }
 
 \examples{
    plot(0:1, 0:1, type="n")
    station.symbol(0.5, 0.5, direction=130, speed=30, fill=3, 
                   temp=31, press=987, dewpt=26, cex=5)
+   title("Wind Barb")
+		  
 }
 
 \keyword{ aplot }

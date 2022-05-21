@@ -1,5 +1,5 @@
-\name{plotwind}
-\alias{plotwind}
+\name{plotWind}
+\alias{plotWind}
 \title{ Winds Profile Plot }
 \description{ Creates a wind profile in the standard atmospheric 
               notation. Each full barb = 10 m/s, half barb = 5 m/s, 
@@ -7,17 +7,26 @@
               speed that can be plotted without amending the program 
               is 65 m/s. }
 
-\usage{ plotwind(dataframe, size=5, ylim=c(1050, 100), legend=FALSE) }
+\usage{
+plotWind(sondeData, sizeBarb = NULL, ylim = c(1050, 100),
+         thin=NULL, legend = FALSE, lwd=1, col="green4",
+         axis=TRUE)
+	 }
 
 %- maybe also `usage' for other objects documented here.
 
 \arguments{
-  \item{dataframe}{ Data frame for sounding data, must have components for 
+  \item{sondeData}{ Data frame for sounding data, must have components for 
                     wind speed \code{wspd}, wind direction \code{dir}, 
                     and pressure \code{press}.}
-  \item{size}{change the thickness of the plotted lines}
-  \item{ylim}{plot extent, in units of pressure}
-  \item{legend}{explains wind barb strategy}
+  \item{sizeBarb}{change the thickness of the plotted lines}
+  \item{thin}{ Max number of wind barbs to draw. }
+  \item{axis}{If TRUE add an axis in pressure. }
+  \item{col}{Color of barbs}
+  \item{lwd}{Line width for barbs}
+  
+  \item{ylim}{Plot extent, in units of pressure. Note this is a reversed axis. }
+  \item{legend}{explains wind barb convention}
 }
 
 \details{ the dataframe must have components for wind speed \code{wspd}, 
@@ -32,13 +41,13 @@
 
 \author{  Doug Nychka, Eric Gilleland}
 
-\seealso{ \code{\link{getsonde}}, \code{\link{plotsonde}} }
+\seealso{ \code{\link{skewtPlot}},  \code{\link{station.symbol}}  }
 
 \examples{
 # Example 1:
-data(ExampleSonde)
-plotwind(ExampleSonde)
-# Example 2:
-plotwind(ExampleSonde, size = 7, legend=TRUE)
+data(sonde1)
+
+plotWind(sonde1, sizeBarb =1.0, legend=TRUE )
+
 }
 \keyword{ hplot }          % at least one, from doc/KEYWORDS

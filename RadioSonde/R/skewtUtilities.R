@@ -1,15 +1,7 @@
-addAxes<-function(){ 
-#  function( tempRangeF = c( -20, 104 ) ){
-##############################################################
-# --- label horizontal axis with degrees F from -20,100 by 20
-# NOTE: temperature range is "hardwired" from the setup plot
-##############################################################
-# highest pressure on plot is 1050 at bottom edge.
-#### no need for x axis annotation because this done via the dry adiabats on right side  
-#TEMPF<- seq( tempRangeF[1], tempRangeF[2],by=20)
-#degc <- ((TEMPF - 32) * 5)/9
-#axis(1, at = skewtx(degc,  skewty(1050)), labels = format( TEMPF) )
-#mtext(side = 1, line = 2, "Temperature (F)")
+
+
+
+addAxesSkewt<-function(){ 
 
 ##############################################################
 # add pressure axis     
@@ -25,7 +17,7 @@ mtext(side=1,line=0.2, at= endL, text="hPa", cex=1,
 
 
 altitudeAxis<- function(sondeData){
-  require(fields)
+ 
   y <- skewty(sondeData$press)
   altKm<- sondeData$alt/1e3
 # trim out missing values  
@@ -33,9 +25,8 @@ altitudeAxis<- function(sondeData){
   y<- y[good]
   altKm<- altKm[good]
   km<- 1: round( max(altKm))
-# cubic spline interpolant to get height at statndard levels  
-  fit<- sreg( altKm, y, lambda=1e-8)
-  yKm<- predict( fit, km)
+# cubic spline interpolant to get height at statndard levels
+  yKm<- splint( altKm, y, km)
   axis(2, line=3, at = yKm, labels = format( km), las=2, cex=.8,
        col="grey40")
   cat( )
@@ -224,3 +215,70 @@ dryAdiabats<- function(xmin, xmax, GREEN){
            col = GREEN, adj = 0.5, cex = 0.5)
   }
 }
+
+tmr <- function(w, p)
+{
+  #
+  # Determine x-coordinate on skew-T, log p diagram given 
+  # temperature (C)
+  # and y-coordinate from FUNCTION SKEWTY.  X-origin at T=0c.
+  #
+  #            "algorithms for generating a skew-t, log p
+  #            diagram and computing selected meteorological
+  #            quantities."
+  #            atmospheric sciences laboratory
+  #            u.s. army electronics command
+  #            white sands missile range, new mexico 88002
+  #            33 pages
+  #       baker, schlatter  17-may-1982
+  #   this function returns the temperature (celsius) on a mixing
+  #   ratio line w (g/kg) at pressure p (mb). the formula is 
+  #   given in
+  #   table 1 on page 7 of stipanuk (1973).
+  #
+  #   initialize constants
+  c1 <- 0.0498646455
+  c2 <- 2.4082965
+  c3 <- 7.07475
+  c4 <- 38.9114
+  c5 <- 0.0915
+  c6 <- 1.2035
+  x <- log10((w * p)/(622. + w))
+  tmrk <- 10^(c1 * x + c2) - c3 + c4 * ((10.^(c5 * x) - c6)^
+                                          2.)
+  return(tmrk - 273.15)
+}
+
+testP<- function( theta, target= 18.9){
+  p <- seq(from = 1050, to = 100,length.out= 500)
+  sy <- skewty(p)
+  dry <- tda(theta, p)
+  sx <- skewtx(dry, sy)
+  ind<- which.min( abs( sx- target))
+  return( p[ind])
+}
+
+tda <- function(o, p)
+{
+  #       reference stipanuk paper entitled:
+  #            "algorithms for generating a skew-t, log p
+  #            diagram and computing selected meteorological
+  #            quantities."
+  #            atmospheric sciences laboratory
+  #            u.s. army electronics command
+  #            white sands missile range, new mexico 88002
+  #            33 pages
+  #       baker, schlatter  17-may-1982
+  #   this function returns the temperature tda (celsius) 
+  #   on a dry adiabat
+  #   at pressure p (millibars). the dry adiabat is given by
+  #   potential temperature o (celsius). the computation is 
+  #   based on
+  #   poisson's equation.
+  ok <- o + 273.15
+  tdak <- ok * ((p * 0.001)^0.286)
+    return(tdak - 273.15)
+}
+
+
+

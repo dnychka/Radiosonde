@@ -30,7 +30,7 @@ function(sondeData, sizeBarb = NULL, ylim = c(1050, 100),
 	par( usr= c( -1,1,ylim2) )
 # add the y axis 
 	if( axis){
-	  addAxes()
+	  addAxesSkewt()
 	}
 # maximum size of wind barbs
 	if( is.null(sizeBarb)){
